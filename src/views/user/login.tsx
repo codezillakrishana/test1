@@ -23,7 +23,7 @@ const Login = () => {
 
         if (response.data.statusCode === 200) {
           toast.success("Login Sucessfull \"Right side bar\"", {theme: 'colored',pauseOnHover: false,})
-          localStorage.setItem('accessToken', JSON.stringify(response.data.data.accessToken))
+          // localStorage.setItem('accessToken', JSON.stringify(response.data.data.accessToken))
           localStorage.setItem('refreshToken', JSON.stringify(response.data.data.refreshToken))
           setTimeout(() => { 
             // aasd
