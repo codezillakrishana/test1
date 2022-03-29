@@ -1,16 +1,16 @@
-import { ELECTION_NAME, ELECTION_TYPE, SELECT_ELECTION_TYPE } from '../../../constants/constant';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Row, Col, Form, Container, Button } from 'react-bootstrap';
-import 'react-circular-progressbar/dist/styles.css';
-import electionTypeService from '../../../api/service/electionService';
-import { addElection } from '../../../store/actionCreators';
+import { toast } from 'react-toastify';
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router';
+import { addElection } from '../../../store/actionCreators';
+import { ELECTION_NAME, ELECTION_TYPE, SELECT_ELECTION_TYPE } from '../../../constants/constant';
+import { IFormData } from '../../../constants/interface';
+import electionTypeService from '../../../api/service/electionService';
+import { Row, Col, Form, Container, Button } from 'react-bootstrap';
+import 'react-circular-progressbar/dist/styles.css';
 import infoIcon from "../../../assets/icons/infoIcon.svg"
 import nairaCurrency from "../../../assets/icons/nairaCurrency.svg"
-import { IFormData } from '../../../constants/interface';
-import { toast } from 'react-toastify';
 
 const ElectionType = () => {
 	const navigate = useNavigate();

@@ -22,7 +22,7 @@ const Login = () => {
         const response = await authService.loginService(userData);
 
         if (response.data.statusCode === 200) {
-          toast.success("Login Sucessfull", {theme: 'colored',pauseOnHover: false,})
+          toast.success("Login Sucessfull \"Right side bar\"", {theme: 'colored',pauseOnHover: false,})
           localStorage.setItem('accessToken', JSON.stringify(response.data.data.accessToken))
           localStorage.setItem('refreshToken', JSON.stringify(response.data.data.refreshToken))
           setTimeout(() => { 
@@ -31,10 +31,10 @@ const Login = () => {
           }, 1000)
 
         } else {
-          toast.error("Failed To Login" , {theme: 'colored',pauseOnHover: false,})
+          toast.error("Failed To Login else condition" , {theme: 'colored',pauseOnHover: false,})
         }
       } catch (error) {
-        toast.error("Failed To Login" , {theme: 'colored',pauseOnHover: false,})
+        toast.error("Failed To Login error" , {theme: 'colored',pauseOnHover: false,})
       }
     // }
     // else {
