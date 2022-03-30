@@ -407,7 +407,7 @@ const ElectionType = () => {
 										className='radio-label custom-radio'
 										type={'radio'}
 										id={`Strong Hold v/s Rest Hold`}
-										label={`Strong Hold v/s Rest Hold`}
+										label={`Strong Hold v/s Rest Hold showing`}
 										name={'LGA'}
 										checked={formData.allocationTypeStrong}
 										onChange={(e) =>
