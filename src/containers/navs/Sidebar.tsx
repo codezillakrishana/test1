@@ -216,9 +216,9 @@ function Sidebar() {
 		) {
 			navigate('/app/data', { replace: true });
 		} 
-		else {
-			toast.error("please fill all the fields", { theme: 'colored', pauseOnHover: false, })
-		}
+		// else {
+		// 	toast.error("please fill all the fields", { theme: 'colored', pauseOnHover: false, })
+		// }
 		console.table(tmpFormData);
 		dispatch(addElection(tmpFormData));
 	};

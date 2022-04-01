@@ -10,15 +10,23 @@ import eyeViewIcon from "../../../assets/icons/eyeViewIcon.svg"
 import people from "../../../assets/icons/people.svg"
 import nairaCurrency from "../../../assets/icons/nairaCurrency.svg"
 import { toast } from "react-toastify";
+import { shallowEqual, useSelector } from 'react-redux';
+
+
 const Dashboard = () => {
   const percentage = 50;
-  const [resultData, setResultData] = useState<IDashboardResult>({type: '', amount_array: [], total_budget: 0});
+  const [resultData, setResultData] = useState<IDashboardResult>({ type: '', amount_array: [], total_budget: 0 });
   const navigate = useNavigate();
   const navigateTo = (type: string, _id: string, budget: number, totalVoters: number) => {
     navigate(`/app/result/${type}/${_id}/${budget}/${totalVoters}`);
   }
+  const electionDataState: IElection = useSelector(
+    (state: ElectionAction) => state.electionData,
+    shallowEqual
+  );
+
   const handelNavigate = (item) => {
-    !item.budget && toast.error("Some Data Missing", {theme: 'colored',pauseOnHover: false})
+    !item.budget && toast.error("Some Data Missing", { theme: 'colored', pauseOnHover: false })
     console.clear();
     console.log(item);
     console.log(resultData?.amount_array);
@@ -30,6 +38,8 @@ const Dashboard = () => {
     let data: IDashboardResult = JSON.parse(localStorage.getItem('result') || '');
     setResultData(data);
     window.scrollTo(0, 0)
+    console.log(electionDataState);
+
   }, [])
 
   return (
@@ -44,7 +54,7 @@ const Dashboard = () => {
                 <div className="mt-4 position-relative circular-progresss-bar" style={{ width: 150, height: 150, margin: 'auto', }} >
                   <CircularProgressbar value={percentage || ''} text={`${percentage}%`} styles={buildStyles({ pathColor: '#2E4269', textColor: '#FA6E57', textSize: '22px', })} />
                   <div className="position-absolute people-icon">
-                    <img src={people}/>
+                    <img src={people} />
                   </div>
                 </div>
               </div>
@@ -64,18 +74,26 @@ const Dashboard = () => {
                 <h2 className="raven-heading text-center">Resource Allocation</h2>
                 <div className="mt-5 d-flex align-items-center">
                   <div className="me-2">
-                  <img src={nairaCurrency}/>
+                    <img src={nairaCurrency} />
                   </div>
                   <div>
-                    <p className="price-rate">1,500 <span className="sub-price-rate">Per head strong hold</span></p>
+                    <p className="price-rate">{electionDataState.spendingOnStrongHolds} <span className="sub-price-rate">Per head strong hold</span></p>
                   </div>
                 </div>
                 <div className="mt-2 d-flex align-items-center">
+                <div className="me-2">
+                  <img src={nairaCurrency} />
+                </div>
+                <div>
+                  <p className="price-rate">{electionDataState.spendingOnWeekHolds} <span className="sub-price-rate">Per head Weak Holds</span></p>
+                </div>
+                </div>
+                <div className="mt-2 d-flex align-items-center">
                   <div className="me-2">
-                  <img src={nairaCurrency}/>
+                    <img src={nairaCurrency} />
                   </div>
                   <div>
-                    <p className="price-rate">{resultData.total_budget }<span className="sub-price-rate"> in total</span></p>
+                    <p className="price-rate">{resultData.total_budget}<span className="sub-price-rate"> in total</span></p>
                   </div>
                 </div>
               </div>
@@ -108,14 +126,16 @@ const Dashboard = () => {
                 </thead>
                 <tbody>
                   {resultData?.amount_array.map((item: IDashboardItem, ind: number) => (
-                    <tr key={ind+1}>
+                    <tr key={ind + 1}>
                       <td>{item.name}</td>
                       <td>{item.total_voter === null ? 'N/A' : item.total_voter}</td>
                       <td>{item.required_voters === null ? "N/A" : item.required_voters}</td>
-                      <td>{'\u20A6'} {item.budget === null ? "N/A " :item.budget.toFixed(2)}</td>
+                      <td>{'\u20A6'} {item.budget === null ? "N/A " : item.budget.toFixed(2)}</td>
                       <td>
                         <a className="cursor-pointer" onClick={() => handelNavigate(item)}>
-                        <img src={eyeViewIcon}/>
+                          {console.log(item)}
+
+                          <img src={eyeViewIcon} />
                         </a>
                       </td>
                     </tr>
