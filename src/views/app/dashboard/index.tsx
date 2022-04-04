@@ -34,12 +34,20 @@ const Dashboard = () => {
     navigateTo(resultData.type, item._id, item.budget, item.total_voter)
   }
 
+  const calPerHead = () => {
+    let avgPerHeadAmmount = 0;
+    resultData.amount_array.map((data, index) => {
+      avgPerHeadAmmount = avgPerHeadAmmount + +data.per_head
+    })
+    avgPerHeadAmmount = avgPerHeadAmmount / resultData.amount_array.length
+    return avgPerHeadAmmount.toFixed(2);
+  }
+
   useEffect(() => {
     let data: IDashboardResult = JSON.parse(localStorage.getItem('result') || '');
     setResultData(data);
     window.scrollTo(0, 0)
     console.log(electionDataState);
-
   }, [])
 
   return (
@@ -72,22 +80,36 @@ const Dashboard = () => {
             <Col md={'4'}>
               <div className="graph-card px-5 py-4">
                 <h2 className="raven-heading text-center">Resource Allocation</h2>
-                <div className="mt-5 d-flex align-items-center">
-                  <div className="me-2">
-                    <img src={nairaCurrency} />
-                  </div>
-                  <div>
-                    <p className="price-rate">{electionDataState.spendingOnStrongHolds} <span className="sub-price-rate">Per head strong hold</span></p>
-                  </div>
-                </div>
-                <div className="mt-2 d-flex align-items-center">
-                <div className="me-2">
-                  <img src={nairaCurrency} />
-                </div>
-                <div>
-                  <p className="price-rate">{electionDataState.spendingOnWeekHolds} <span className="sub-price-rate">Per head Weak Holds</span></p>
-                </div>
-                </div>
+                {(electionDataState.allocationTypeStrong === true)
+                  ? <>
+                    <div className="mt-5 d-flex align-items-center">
+                      <div className="me-2">
+                        <img src={nairaCurrency} />
+                      </div>
+                      <div>
+                        <p className="price-rate">{electionDataState.spendingOnStrongHolds} <span className="sub-price-rate">Per head strong hold</span></p>
+                      </div>
+                    </div>
+                    <div className="mt-2 d-flex align-items-center">
+                      <div className="me-2">
+                        <img src={nairaCurrency} />
+                      </div>
+                      <div>
+                        <p className="price-rate">{electionDataState.spendingOnWeekHolds} <span className="sub-price-rate">Per head Weak Holds</span></p>
+                      </div>
+                    </div>
+                  </>
+                  : <>
+                    <div className="mt-5 d-flex align-items-center">
+                      <div className="me-2">
+                        <img src={nairaCurrency} />
+                      </div>
+                      <div>
+                        <p className="price-rate">{calPerHead()} <span className="sub-price-rate">Per head Average</span></p>
+                      </div>
+                    </div>
+                  </>
+                }
                 <div className="mt-2 d-flex align-items-center">
                   <div className="me-2">
                     <img src={nairaCurrency} />
